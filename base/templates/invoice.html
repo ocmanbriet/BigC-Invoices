@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <h3>HS Wholesale Invoice for Order #{{order_id}}}</h3>
+  </head>
+  <body style="font-family: Arial, Helvetica, sans-serif">
+    <table
+      width="100%"
+      cellspacing="0"
+      cellpadding="0"
+      style="
+        border-collapse: collapse;
+        border-spacing: 0;
+        margin: 0;
+        padding: 0;
+      "
+    >
+      <tr>
+        <td>
+          <img
+            src="http://127.0.0.1:8000/static/logo.png"  
+            alt="logo"
+            style="height: auto; width: 300px"
+          />
+        </td>
+        <td style="text-align: right">
+          <img
+            src="http://127.0.0.1:8000/static/warning.webp"
+            alt="warning"
+            style="height: 200px; width: auto"
+          />
+        </td>
+      </tr>
+    </table>
+    <div
+      style="
+        font-size: 18px;
+        font-weight: bold;
+        color: grey;
+        padding: 8px;
+      "
+    >
+      HS Wholesale Invoice for Order #{{order_id}}
+    </div>
+    <div style="font-size: 14px; margin-top: 5px">
+      <br />
+      511 South Vista Avenue<br />
+      Addison, IL 60101
+    </div>
+    <table
+      width="100%"
+      cellspacing="0"
+      cellpadding="0"
+      style="
+        border-collapse: collapse;
+        border-spacing: 0;
+        margin: 20px;
+        border-top: 1px solid black;
+      "
+    >
+      <tr>
+        <td width="50%" style="vertical-align: top">
+          <br>
+          <h2>Billing Details</h2>
+          <b>{{billing_first_name}} {{billing_last_name}}</b>
+          <br>
+          <b>{{ company_name }}</b>
+          <p>{{billing_street_1}} {{billing_street_2}} {{billing_suburb}}</p> 
+          <p>{{billing_state}} {{billing_zip}} {{billing_country}}</p>
+          <p><b>TAX ID: </b>{{billing_tax_id}}</p>
+        <p><b>Phone:</b> {{billing_phone}} <b>Email:</b> {{billing_email}}</p>
+          <p><b>Order: </b>{{order_id}}</p>
+          <p><b>Payment Method: </b>{{billing_payment_method}}</p>
+        </td>
+        <td width="50%" style="vertical-align: top">
+          <br>
+          <h2>Shipping Details</h2>
+          <b>{{shipping_first_name}} {{shipping_last_name}}</b>
+          <br>
+          <b>{{ company_name }}</b>
+          <p>{{shipping_street_1}} {{shipping_street_2}} {{shipping_suburb}} </p>
+          <p>{{shipping_state}} {{shipping_zip}} {{shipping_country}}</p>
+          </p>
+          <p><b>TAX ID:</b> {{shipping_tax_id}}</p>
+          <p><b>Phone:</b> {{shipping_phone}} <b>Email:</b> {{shipping_email}}</p>
+          <p><b>Order Date: </b>{{order_date}}</p>
+          <p><b>Shipping Method: </b>{{ship_method}}</p>
+        </td>
+      </tr>
+    </table>
+    <!-- Order Table -->
+    <table
+      width="100%"
+      cellspacing="0"
+      cellpadding="0"
+      style="border-collapse: collapse; border-spacing: 0"
+    >
+      <tr>
+        <th
+          style="
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+            background-color: #f2f2f2;
+          "
+        >
+          Qty
+        </th>
+        <th
+          style="
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+            background-color: #f2f2f2;
+          "
+        >
+          Code/SKU
+        </th>
+        <th
+          style="
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+            background-color: #f2f2f2;
+          "
+        >
+          Product Name
+        </th>
+        <th
+          style="
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+            background-color: #f2f2f2;
+          "
+        >
+          Price
+        </th>
+        <th
+          style="
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+            background-color: #f2f2f2;
+          "
+        >
+          Total
+        </th>
+      </tr>
+      {% for i in prods %}
+      <tr>
+        <td style="padding: 8px; text-align: left; vertical-align: top">
+          {{i.product_qty}}
+        </td>
+        <td style="padding: 8px; text-align: left; vertical-align: top">
+          {{i.product_sku}}
+        </td>
+        <td style="padding: 8px; text-align: left; vertical-align: top">
+          {{i.product_name}}
+        </td>
+        <td style="padding: 8px; text-align: left; vertical-align: top">
+          ${{i.product_unit_price}}
+        </td>
+        <td style="padding: 8px; text-align: left; vertical-align: top">
+          ${{i.product_total_price}}
+        </td>
+      </tr>
+      {% endfor %}
+      
+    </table>
+    <p style="padding: 0%; text-align: right">Subtotal: ${{ subtotal_inc_tax }}</p>
+    {% if tax_total %}
+    <p style="padding: 0%; text-align: right">Tax: {{ tax_total }}</p>
+    {% endif %}
+    {% if shipping_cost_inc_tax %}
+    <p style="padding: 0%; text-align: right">Shipping: ${{ shipping_cost_inc_tax }}</p>
+    {% endif %}
+    <p style="padding: 0%; text-align: right">
+      {% comment %} Ohio Sales and Use Tax: $0.00 USD {% endcomment %}
+    </p>
+    <p style="padding: 0%; text-align: right">
+      {% comment %} Ohio Vapor Tax per milliliter: $92.00 USD {% endcomment %}
+    </p>
+    {% if store_credit_redeemed%}
+    <p style="padding: 0%; text-align: right">Store credit: -${{ store_credit_redeemed }}</p>
+    {% endif %}
+    <h4 style="padding: 0%; text-align: right">
+      <b>Grand total: ${{ order_total_inc_tax }}</b>
+    </h4>
+    <div style="padding: 0%">
+      <h2>Comment</h2>
+      <p>
+        {% if customer_message %}
+        {{customer_message}}
+        {% endif %}
+      </p>
+    </div>
+    <div style="padding: 8px">
+      <h2>Disclaimer</h2>
+      <p>
+        Upon Arrival inspect your item: -Please inspect all packages upon
+        arrival. Keep in mind that packages must be inspected for damage or
+        shortages within 48 hours of delivery. Damage or shortage claims made
+        after these time periods will be rejected. If you find damage, defects,
+        or missing parts within the times allotted above; please contact our
+        Customer Service department. Should any damage or discrepancies arise,
+        please contact us by e-mail at wh@hswsupply.com or phone 630-882-2222
+      </p>
+    </div>
+  </body>
+</html>

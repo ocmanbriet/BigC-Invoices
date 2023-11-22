@@ -1,0 +1,72 @@
+from django.db import models
+
+
+class Orders(models.Model):
+    order_id = models.CharField(max_length=5000, null=True, blank=True)
+    customer_id = models.CharField(max_length=5000, null=True, blank=True)
+    customer_name = models.CharField(max_length=5000, null=True, blank=True)
+    customer_email = models.EmailField(null=True, blank=True)
+    customer_phone = models.CharField(max_length=2000, null=True, blank=True)
+    order_date = models.DateField(null=True, blank=True)
+    order_status = models.CharField(max_length=5000, null=True, blank=True)
+    subtotal_inc_tax = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    subtotal_ex_tax = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    tax_total = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    shipping_cost_inc_tax = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    shipping_cost_ex_tax = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    ship_method = models.CharField(max_length=5000, null=True, blank=True)
+    handling_cost_inc_tax = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    handling_cost_ex_tax = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    store_credit_redeemed = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    gift_certificate_amount_redeemed = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    gift_certificate_code = models.CharField(max_length=5000, null=True, blank=True)
+    gift_certificate_expiration_date = models.DateField(null=True, blank=True)
+    coupon_details = models.TextField(null=True, blank=True)
+    order_total_inc_tax = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    order_total_ex_tax = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    payment_method = models.CharField(max_length=5000, null=True, blank=True)
+    total_quantity = models.IntegerField(null=True, blank=True)
+    total_shipped = models.IntegerField(null=True, blank=True)
+    date_shipped = models.DateField(null=True, blank=True)
+    order_currency_code = models.CharField(max_length=300, null=True, blank=True)
+    exchange_rate = models.DecimalField(max_digits=10, decimal_places=6, null=True, blank=True)
+    order_notes = models.TextField(null=True, blank=True)
+    customer_message = models.TextField(null=True, blank=True)
+    billing_first_name = models.CharField(max_length=5000, null=True, blank=True)
+    billing_last_name = models.CharField(max_length=5000, null=True, blank=True)
+    billing_company = models.CharField(max_length=5000, null=True, blank=True)
+    billing_street_1 = models.CharField(max_length=5000, null=True, blank=True)
+    billing_street_2 = models.CharField(max_length=5000, null=True, blank=True)
+    billing_suburb = models.CharField(max_length=5000, null=True, blank=True)
+    billing_state = models.CharField(max_length=5000, null=True, blank=True)
+    billing_zip = models.CharField(max_length=2000, null=True, blank=True)
+    billing_country = models.CharField(max_length=5000, null=True, blank=True)
+    billing_phone = models.CharField(max_length=2000, null=True, blank=True)
+    billing_email = models.EmailField(null=True, blank=True)
+    billing_tax_id = models.CharField(max_length=5000, null=True, blank=True)
+    shipping_first_name = models.CharField(max_length=5000, null=True, blank=True)
+    shipping_last_name = models.CharField(max_length=5000, null=True, blank=True)
+    shipping_company = models.CharField(max_length=5000, null=True, blank=True)
+    shipping_street_1 = models.CharField(max_length=5000, null=True, blank=True)
+    shipping_street_2 = models.CharField(max_length=5000, null=True, blank=True)
+    shipping_suburb = models.CharField(max_length=5000, null=True, blank=True)
+    shipping_state = models.CharField(max_length=5000, null=True, blank=True)
+    shipping_zip = models.CharField(max_length=2000, null=True, blank=True)
+    shipping_country = models.CharField(max_length=5000, null=True, blank=True)
+    shipping_phone = models.CharField(max_length=2000, null=True, blank=True)
+    shipping_email = models.EmailField(null=True, blank=True)
+    shipping_tax_id = models.CharField(max_length=5000, null=True, blank=True)
+    product_details = models.TextField(null=True, blank=True)
+    refund_amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    company_name = models.CharField(max_length=1000, null=True, blank=True)
+    
+    def __str__(self):
+        return f"Order {self.order_id} by {self.customer_name}"
+    
+
+class CompanyName(models.Model):
+    order_id = models.CharField(max_length=100, null=True, blank=True)
+    company_name = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.order_id} - {self.company_name}"
